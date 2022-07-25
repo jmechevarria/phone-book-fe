@@ -47,7 +47,7 @@ const loadMore = async () => {
 
     const newContacts = data.result.contacts;
     if (newContacts?.length) {
-      contacts.value = newContacts;
+      contacts.value = contacts.value.concat(newContacts);
     }
     if (newContacts?.length < limit) noMoreContacts.value = true;
 
@@ -102,22 +102,25 @@ const onItemDelete = (contact: Contact) => {
 </script>
 
 <template>
-  <div v-if="isLoading" id="loading">Loading...</div>
-  <div v-if="!isLoading" id="actions" class="row justify-content-end">
+  <div id="actions" class="row justify-content-end">
     <div class="col-auto">
-      <button class="btn btn-primary" v-if="!isLoading" @click="loadMore">
+      <button :disabled="isLoading" class="btn btn-primary" @click="loadMore">
         Load More
       </button>
     </div>
 
     <div class="col-auto">
-      <button class="btn btn-success" v-if="!isLoading" @click="createContact">
+      <button
+        :disabled="isLoading"
+        class="btn btn-success"
+        @click="createContact"
+      >
         Create Contact
       </button>
     </div>
   </div>
 
-  <table v-if="!isLoading" class="table p-5 text-center align-middle">
+  <table class="table p-5 text-center align-middle">
     <thead>
       <tr>
         <th
