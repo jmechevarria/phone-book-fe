@@ -27,6 +27,42 @@ const router = createRouter({
       component: SignupView,
     },
     {
+      path: "/logout",
+      name: "logout",
+      redirect: "login",
+    },
+    {
+      path: "/contacts",
+      name: "contacts",
+      component: ContactsView,
+      beforeEnter: (to, from) => {
+        if (!getToken()) return "/login";
+
+        return true;
+      },
+    },
+    {
+      path: "/contacts/new",
+      name: "new-contact",
+      component: NewContactView,
+      beforeEnter: (to, from) => {
+        if (!getToken()) return "/login";
+
+        return true;
+      },
+    },
+    {
+      path: "/contacts/details/:id",
+      name: "contact-details",
+      component: ContactDetailsView,
+      beforeEnter: (to, from) => {
+        if (!getToken()) return "/login";
+
+        return true;
+      },
+      props: (route) => ({ id: route.params.id }),
+    },
+    {
       path: "/:catchAll(.*)", // Unrecognized path automatically matches 404
       redirect: "/login",
     },
