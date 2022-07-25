@@ -1,1 +1,1 @@
-# Phone Book frontend
+# Phone Book app frontend
