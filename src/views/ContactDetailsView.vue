@@ -6,7 +6,7 @@ import { onMounted, ref } from "vue";
 const isLoading = ref(false);
 const name = ref("");
 const phone = ref("");
-const addressLines = ref([""]); 
+const addressLines = ref([""]);
 
 const props = defineProps<{
   id: string;
@@ -35,7 +35,7 @@ onMounted(async () => {
   <div class="d-flex flex-column p-5">
     <h1>Contact details</h1>
 
-    <form class="login-form d-flex flex-column">
+    <form class="d-flex flex-column">
       <div class="row">
         <div class="col">
           <input

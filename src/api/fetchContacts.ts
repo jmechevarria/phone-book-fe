@@ -41,7 +41,9 @@ export const fetchContacts = async (
       },
     });
 
-    cache(url, data);
+    if (payload?.id) {
+      cache(url, data);
+    }
 
     return data;
   } else throw new UnauthorizedException("No token provided");

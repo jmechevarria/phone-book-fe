@@ -22,36 +22,68 @@ const handleLogin = async (e: Event) => {
   } catch (error) {
     console.error("Error during login");
   }
-  buttonText.value = "Login";
+  buttonText.value = "Log in";
   isLoading.value = false;
   router.push("/contacts");
 };
 </script>
-
 <template>
-  <div class="about">
-    <h1>Welcome</h1>
+  <div class="d-flex flex-column p-5 form-signin w-100 m-auto text-center">
+    <form @submit="handleLogin">
+      <img class="mb-4" src="/favicon.ico" />
+      <h1 class="h3 mb-3 fw-normal">Please log in</h1>
 
-    <form class="login-form" @submit="handleLogin">
-      <input
-        v-model="email"
-        type="email"
-        name="email"
-        placeholder="john.doe@example.com"
-        required
-      />
+      <div class="form-floating">
+        <input
+          v-model="email"
+          type="email"
+          name="email"
+          id="email"
+          class="form-control"
+          placeholder="john.doe@example.com"
+          required
+        />
+        <label for="email">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input
+          v-model="password"
+          type="password"
+          name="password"
+          id="password"
+          class="form-control"
+          placeholder="password"
+          required
+        />
+        <label for="password">Password</label>
+      </div>
 
-      <input
-        v-model="password"
-        type="password"
-        name="password"
-        placeholder="password"
-        required
-      />
-
-      <button :disabled="isLoading">{{ buttonText }}</button>
+      <button class="w-100 btn btn-lg btn-primary" :disabled="isLoading">
+        {{ buttonText }}
+      </button>
     </form>
   </div>
 </template>
 
-<style></style>
+<style scoped>
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+</style>

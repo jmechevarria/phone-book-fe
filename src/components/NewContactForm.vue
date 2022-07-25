@@ -32,7 +32,7 @@ const createNewContact = async (e: Event) => {
   <div class="d-flex flex-column p-5">
     <h1>New Contact</h1>
 
-    <form class="login-form d-flex flex-column" @submit="createNewContact">
+    <form class="d-flex flex-column" @submit="createNewContact">
       <div class="row">
         <div class="col">
           <input
