@@ -1,12 +1,11 @@
-import ContactDetailsView from "@/views/ContactDetailsView.vue";
-import ContactsView from "@/views/ContactsView.vue";
-import LoginView from "@/views/LoginView.vue";
-import NewContactView from "@/views/NewContactView.vue";
-import SignupView from "@/views/SignupView.vue";
-
 import { createRouter, createWebHistory } from "vue-router";
 
 import { getToken } from "@/util/storage-service";
+import ContactDetailsViewVue from "@/views/ContactDetailsView.vue";
+import ContactsViewVue from "@/views/ContactsView.vue";
+import LoginViewVue from "@/views/LoginView.vue";
+import NewContactViewVue from "@/views/NewContactView.vue";
+import SignupViewVue from "@/views/SignupView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,7 +13,7 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: LoginView,
+      component: LoginViewVue,
       beforeEnter: (to, from) => {
         if (getToken()) return "/contacts";
 
@@ -24,7 +23,7 @@ const router = createRouter({
     {
       path: "/signup",
       name: "signup",
-      component: SignupView,
+      component: SignupViewVue,
     },
     {
       path: "/logout",
@@ -34,7 +33,7 @@ const router = createRouter({
     {
       path: "/contacts",
       name: "contacts",
-      component: ContactsView,
+      component: ContactsViewVue,
       beforeEnter: (to, from) => {
         if (!getToken()) return "/login";
 
@@ -44,7 +43,7 @@ const router = createRouter({
     {
       path: "/contacts/new",
       name: "new-contact",
-      component: NewContactView,
+      component: NewContactViewVue,
       beforeEnter: (to, from) => {
         if (!getToken()) return "/login";
 
@@ -54,7 +53,7 @@ const router = createRouter({
     {
       path: "/contacts/details/:id",
       name: "contact-details",
-      component: ContactDetailsView,
+      component: ContactDetailsViewVue,
       beforeEnter: (to, from) => {
         if (!getToken()) return "/login";
 

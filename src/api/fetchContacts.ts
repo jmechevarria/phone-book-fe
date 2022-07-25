@@ -1,5 +1,6 @@
 import { UnauthorizedException } from "@/errors";
 import type { ApiResponse, Contact } from "@/types";
+import { cache, retrieve } from "@/util/cache-service";
 import { getToken } from "@/util/storage-service";
 import axios from "axios";
 
@@ -19,20 +20,29 @@ export const fetchContacts = async (
   const token = getToken();
 
   if (token) {
+    const url = `${import.meta.env.VITE_API_URL}/contacts/${
+      payload.id || ""
+    }?limit=${payload.limit || ""}&offset=${payload.offset || ""}`;
+
+    if (payload?.id) {
+      const localData = retrieve(url);
+
+      if (localData !== "stale") return localData;
+    }
+
+    console.warn("Hitting server");
+
     payload.limit = payload.id ? 1 : payload.limit;
     payload.offset = payload.id ? 0 : payload.offset;
 
-    return (
-      await axios.get(
-        `${import.meta.env.VITE_API_URL}/contacts/${payload.id || ""}?limit=${
-          payload.limit || ""
-        }&offset=${payload.offset || ""}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-    ).data;
+    const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    cache(url, data);
+
+    return data;
   } else throw new UnauthorizedException("No token provided");
 };
